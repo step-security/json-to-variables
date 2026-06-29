@@ -47,7 +47,12 @@ async function run() {
     const prefix = core.getInput('prefix', { required: false }) || '';
     const hasSecrets = core.getBooleanInput('has_secrets', { required: false });
 
+    const workspacePath = path.resolve(process.env.GITHUB_WORKSPACE || process.cwd());
     const fullPath = path.resolve(fileName);
+
+    if (!fullPath.startsWith(workspacePath + path.sep) && fullPath !== workspacePath) {
+      throw new Error(`filename must be within the workspace directory: ${workspacePath}`);
+    }
 
     core.info(`Processing file: ${fullPath}. Contains secrets: ${hasSecrets}`);
 
