@@ -1,0 +1,21 @@
+name: 'JSON to variables'
+author: 'step-security'
+description: 'This action reads json file and writes its content as environment variables'
+branding:
+  icon: 'box'
+  color: 'purple'
+inputs:
+  filename: 
+    description: 'The json file.'
+    required: true
+  prefix:
+    description: 'The prefix for variables.'
+    required: false
+    default: ''
+  has_secrets:
+    description: 'Identifies whether file has variables considered as secrets. If `true` - adds all variables to github secrets to be masked in logs'
+    required: false
+    default: false
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
